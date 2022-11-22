@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Item form fragment</title>
+</head>
+<body>
+
+<div th:fragment="item-form" class="mb-5">
+
+    <div class="mb-3">
+        <label class="form-label" for="title" th:text="#{new.what.__${itemType}__}">What?</label>
+        <input class="form-control" id="title" type="text" th:field="*{title}" th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}">
+        <div class="invalid-feedback" th:errors="*{title}">ERROR</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="whom" th:text="#{new.whom.__${itemType}__}">Whom?</label>
+        <input class="form-control" id="whom" list="whomOptions" type="text" autocomplete="off"
+               th:field="*{whom}" th:classappend="${#fields.hasErrors('whom') ? 'is-invalid' : ''}">
+        <datalist id="whomOptions">
+            <option th:each="name : ${allWhomNames}" th:value="${name}">
+        </datalist>
+        <div class="invalid-feedback" th:errors="*{whom}">ERROR</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="date" th:text="#{new.when.__${itemType}__}">When?</label>
+        <input class="form-control" id="date" type="date" th:field="*{date}" th:classappend="${#fields.hasErrors('date') ? 'is-invalid' : ''}">
+        <div class="invalid-feedback" th:errors="*{date}">ERROR</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="due-date" th:utext="#{new.due.__${itemType}__(#{new.optional-field})}">Due?</label>
+        <input class="form-control" id="due-date" type="date" th:field="*{dueDate}" th:classappend="${#fields.hasErrors('dueDate') ? 'is-invalid' : ''}">
+        <div class="invalid-feedback" th:errors="*{dueDate}">ERROR</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="description" th:utext="#{new.description(#{new.optional-field})}">Description</label>
+        <textarea class="form-control" id="description" type="text" rows="3" th:field="*{description}" th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}"></textarea>
+        <div class="invalid-feedback" th:errors="*{description}">ERROR</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="category" th:text="#{new.category}">Category</label>
+        <select class="form-select" id="category" th:field="*{category}" th:classappend="${#fields.hasErrors('category') ? 'is-invalid' : ''}">
+            <option selected value=""></option>
+            <option th:each="cat : ${T(com.github.alglus.BorrowedList.models.Category).values()}" th:value="${cat}"
+                    th:text="${cat.getTitle()}">Some category
+            </option>
+        </select>
+        <div class="invalid-feedback" th:errors="*{category}">ERROR</div>
+    </div>
+</div>
+
+</body>
+</html>

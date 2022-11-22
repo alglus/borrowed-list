@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/app-layout.html}"
+      th:with="itemType = ${param.type[0]},
+               query = ${#request.getQueryString()}">
+<head>
+    <title th:text="#{list.title.__${itemType}__}">List of items</title>
+</head>
+<body>
+
+<main layout:fragment="main" id="itemsListContainer" class="d-flex flex-grow-1">
+
+    <div id="listOptions" class="small me-5" style="color: #444;">
+
+        <h5 th:text="#{list.items-count.label.__${itemType}__}">Borrowed items</h5>
+        <p class="card-text" th:text="#{list.items-count(${totalItems})}">42 items</p>
+
+        <h5 th:text="#{list.display.label}">Display</h5>
+        <div class="row mb-3">
+            <div class="col-auto">
+                <label for="itemsPerPage" class="col-form-label" th:text="#{list.items-per-page.label}">Items per page</label>
+            </div>
+            <div class="col-auto d-flex">
+                <select id="itemsPerPage" class="form-select my-auto" onchange="changeNumberOfItemsPerPage(this.value)">
+                    <option th:each="itemsPerPage : ${@environment.getProperty('alglus.items-display.allowed-options.ITEMS_PER_PAGE').split(',')}"
+                            th:value="${itemsPerPage}" th:text="${itemsPerPage}"
+                            th:selected="${itemsPerPage == settings.getItemsPerPage()}">10
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-auto">
+                <label for="selectSort" class="col-form-label" th:text="#{list.sort.label}">Sort by</label>
+            </div>
+            <div class="col-auto d-flex">
+                <select id="selectSort" class="form-select my-auto" onchange="sortItems(this.value)"
+                        th:with="currentSortOption = '&sort=' + ${settings.getSortBy()} + '&dir=' + ${settings.getSortDirection()}">
+                    <option th:each="i : ${#numbers.sequence(0, __${sortUrlGetParamKeys.size() - 1}__)}"
+                            th:value="${sortUrlGetParams.get(i)}"
+                            th:text="#{list.sort.__${sortUrlGetParamKeys.get(i)}__}"
+                            th:selected="${sortUrlGetParams.get(i) == currentSortOption}">Sort by stuff
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-fill d-flex flex-column">
+        <div class="itemCard card text-bg-light mb-3" th:each="item : ${items}" th:classappend="'itemCard-' + ${itemType}"
+             th:onclick="|window.location.href='@{/items/{id}?{q} (id=${item.getId()}, q=${query})}'|" href="#">
+            <div class="row">
+                <div class="col-2 d-flex">
+                    <a class="checkButton mx-auto my-auto" th:href="@{/items/{id}/return (id=${item.getId()})}" th:title="#{button.mark-returned}" href="#">
+                        <svg class="bi bi-check-circle-fill" width="40" height="40" role="img" aria-label="Mark returned">
+                            <use xlink:href="#check"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="col-auto card-body ps-0">
+                    <div class="row">
+                        <div class="col-8">
+                            <h5 class="card-title" th:text="${item.getTitle()}">Title</h5>
+                        </div>
+                        <div class="col-4">
+                            <span class="badge text-bg-secondary card-text" th:text="${item.getCategory().getTitle()}">Clothes</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <p class="card-text" th:text="#{list.to-from.__${itemType}__(${item.getWhom()})}">From: Tom</p>
+                        </div>
+                        <div class="col-4 text-center">
+                            <p class="card-text" th:text="#{item.date.daysAgo(${item.getDaysAgo()})}" th:title="${item.getDate()}">42 days ago</p>
+                        </div>
+                        <div class="col-4">
+                            <p class="card-text" th:text="#{item.due(${item.getDueDate()})}" th:title="${item.getDueDate()}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <a class="editButton d-inline-block w-100 h-100 d-flex justify-content-center align-items-center"
+                       th:href="@{/items/{id}/edit?{q} (id=${item.getId()}, q=${query})}" th:title="#{button.edit}" href="#">
+                        <svg class="bi bi-pencil-fill" width="25" height="25" role="img" aria-label="Logout">
+                            <use xlink:href="#edit"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="pageNav" class="position-relative flex-grow-1">
+            <nav class="mt-auto position-absolute bottom-0" aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{/items?type={type}&page={page} (type=${itemType}, page=${currentPage - 1})}" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:each="p : ${#numbers.sequence(1, __${totalPages}__)}"
+                        th:classappend="${p == currentPage + 1 ? 'active' : ''}">
+                        <a class="page-link" th:text="${p}" th:href="@{/items?type={type}&page={page} (type=${itemType}, page=${p - 1})}" href="#">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage == totalPages - 1 ? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{/items?type={type}&page={page} (type=${itemType}, page=${currentPage + 1})}" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <a id="addButton" class="btn" th:href="@{'/items/new?' + ${query}}" href="#" th:title="#{list.button.add.__${itemType}__}">
+        <svg class="bi bi-plus-lg" width="30" height="30" role="img" aria-label="Add">
+            <use xlink:href="#plus"/>
+        </svg>
+    </a>
+
+    <script>
+        const itemType = "[[${itemType}]]";
+    </script>
+</main>
+
+
+</body>
+</html>

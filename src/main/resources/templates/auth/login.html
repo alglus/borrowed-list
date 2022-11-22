@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/auth-layout.html}">
+<head>
+    <title th:text="#{login.title}">Login page</title>
+</head>
+<body>
+
+<div layout:fragment="form">
+
+    <h3 class="mb-3 fw-normal" th:text="#{login.heading}">Please sign in</h3>
+
+    <form method="POST" action="/process_login" novalidate>
+        <input type="hidden" th:name="${_csrf.getParameterName()}" th:value="${_csrf.token}">
+
+        <div class="form-floating">
+            <input type="email" name="username" class="form-control" id="loginInputEmail" placeholder="name@example.com" th:classappend="${param.error == null ? '' : 'is-invalid'}">
+            <label for="loginInputEmail" th:text="#{auth.email.label}">Email address</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" name="password" class="form-control" id="loginInputPassword" placeholder="password" th:classappend="${param.error == null ? '' : 'is-invalid'}">
+            <label for="loginInputPassword" th:text="#{auth.password.label}">Password</label>
+        </div>
+
+        <div th:if="${param.error}" class="form-floating-error" th:text="#{login.error}">LOGIN ERROR</div>
+
+        <div class="d-flex">
+            <div class="form-check mx-auto my-3">
+                <input class="form-check-input" type="checkbox" name="remember-me" id="rememberMeCheckBox">
+                <label class="form-check-label" for="rememberMeCheckBox" th:text="#{login.remember-me.label}">Remember me</label>
+            </div>
+        </div>
+
+        <button class="w-100 btn btn-lg btn-primary mb-3" type="submit" th:text="#{login.button.login}">Sign in</button>
+    </form>
+
+    <a href="/register" th:text="#{login.button.create-account}">Create new account</a>
+
+</div>
+
+</body>
+</html>

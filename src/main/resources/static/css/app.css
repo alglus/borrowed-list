@@ -1,0 +1,304 @@
+:root {
+    --color-borrowed: #4D7C8A;
+    --color-borrowed-rgb: 77, 124, 138;
+    --color-lent: #6BA368;
+    --color-lent-rgb: 107, 163, 104;
+    --color-dark: #252627;
+    --color-dark-rgb: 37, 38, 39;
+    --color-white: #FFF9FB;
+    --color-white-rgb: 255, 249, 251;
+    --color-gray: #D3D4D9;
+    --color-gray-dark: #878997;
+    --color-gray-darker: #5F616D;
+    --color-accent: #ECA72C;
+    --color-accent-rgb: 236, 167, 44;
+}
+
+
+/*
+    Body
+ */
+body {
+    height: 100vh;
+    min-height: 100vh;
+}
+
+.container {
+    min-width: 1000px;
+}
+
+#mainContainer {
+    padding-top: 2rem;
+}
+
+
+/*
+    Footer
+ */
+footer {
+    z-index: 2;
+    position: relative;
+    min-height: 4rem;
+    background-color: var(--color-gray);
+}
+
+footer div {
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    bottom: 0;
+    margin-top: 3rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+
+/*
+    Header
+ */
+header {
+    display: flex;
+    position: relative;
+    height: 54px;
+    color: var(--color-white);
+    background-color: var(--color-dark);
+}
+
+header nav {
+    margin: 4px 0;
+}
+
+.nav-link:link, .nav-link:hover, .nav-link:focus, .nav-link:visited {
+    color: var(--color-white);
+}
+
+#navButtonBorrowed.active, #navButtonBorrowed:hover {
+    background-color: var(--color-borrowed);
+}
+
+#navButtonLent.active, #navButtonLent:hover {
+    background-color: var(--color-lent);
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--color-gray-dark);
+    --bs-btn-border-color: var(--color-gray-dark);
+    --bs-btn-hover-color: var(--color-white);
+    --bs-btn-hover-bg: var(--color-gray-darker);
+    --bs-btn-hover-border-color: var(--color-gray-darker);
+    --bs-btn-focus-shadow-rgb: 108, 117, 125;
+    --bs-btn-active-color: var(--color-white);
+    --bs-btn-active-bg: var(--color-gray-darker);
+    --bs-btn-active-border-color: var(--color-gray-darker);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: var(--color-gray-darker);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: var(--color-gray-darker);
+    --bs-gradient: none;
+}
+
+
+/*
+    List options
+ */
+#listOptions {
+    width: 290px;
+}
+
+#listOptions .form-select {
+    color: var(--color-gray-darker);
+    font-size: 0.875rem;
+}
+
+#listOptions h5 {
+    border-bottom: 1px solid var(--color-gray);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
+}
+
+#listOptions h5:not(:first-of-type) {
+    margin-top: 3rem;
+}
+
+
+/*
+    Items Cards
+ */
+.card {
+    --bs-card-title-spacer-y: 1rem !important;
+}
+
+.card-text {
+    margin-bottom: 0.3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-title {
+    font-weight: bold;
+}
+
+.itemCard {
+    cursor: pointer;
+    color: var(--color-white) !important;
+}
+
+.itemCard-borrowed {
+    background-color: var(--color-borrowed) !important;
+}
+
+.itemCard-lent {
+    background-color: var(--color-lent) !important;
+}
+
+.checkButton {
+    color: rgba(var(--color-white-rgb), 0.5);
+}
+
+.checkButton:hover {
+    color: rgb(var(--color-white-rgb));
+    border: 10px solid rgba(var(--color-white-rgb), 0.3);
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+
+.editButton {
+    color: rgba(var(--color-dark-rgb), 0.5);
+    background-color: rgba(var(--color-dark-rgb), 0.1);
+}
+
+.editButton:hover {
+    color: rgba(var(--color-dark-rgb), 0.8);
+    background-color: rgba(var(--color-dark-rgb), 0.1);
+}
+
+
+/*
+    Pagination
+ */
+#pageNav {
+    min-height: 5rem;
+}
+
+#pageNav > nav {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.pagination {
+    --bs-pagination-color: var(--color-dark);
+    --bs-pagination-bg: #fff;
+    --bs-pagination-border-color: var(--color-gray);
+    --bs-pagination-hover-color: var(--color-dark);
+    --bs-pagination-hover-bg: var(--color-gray);
+    --bs-pagination-hover-border-color: var(--color-gray);
+    --bs-pagination-focus-color: var(--color-dark);
+    --bs-pagination-focus-bg: var(--color-gray);
+    --bs-pagination-active-color: var(--color-white);
+    --bs-pagination-active-bg: var(--color-gray-dark);
+    --bs-pagination-active-border-color: var(--color-gray-dark);
+    --bs-pagination-disabled-color: var(--color-gray);
+    --bs-pagination-disabled-bg: #fff;
+    --bs-pagination-disabled-border-color: var(--color-gray);
+}
+
+
+/*
+    Add button
+ */
+#addButton {
+    z-index: 1;
+}
+
+#addButton {
+    position: fixed;
+    bottom: 125px;
+    border-radius: 50%;
+    padding: 20px;
+    color: #fff;
+    background-color: rgba(var(--color-accent-rgb), 0.7);
+}
+
+#addButton:hover {
+    background-color: rgb(var(--color-accent-rgb));
+}
+
+
+.configBtnActive {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+
+/*
+    Show item
+ */
+#showItem h2 {
+    padding-bottom: 1rem;
+}
+
+#showItem .titleItem-borrowed {
+    border-bottom: 7px solid var(--color-borrowed);
+}
+
+#showItem .titleItem-lent {
+    border-bottom: 7px solid var(--color-lent);
+}
+
+#showItem dd:not(:last-of-type) {
+    margin-bottom: 2rem;
+}
+
+#showItemButtons {
+    border-top: 1px solid var(--color-gray-dark);
+}
+
+
+/*
+    Item form
+ */
+.optionalField {
+    margin-left: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--color-gray-dark)
+}
+
+
+/*
+    Borrowed / Lent Button colors
+ */
+.btn-borrowed {
+    --bs-btn-color: var(--color-white);
+    --bs-btn-bg: rgba(var(--color-borrowed-rgb), 0.95);
+    --bs-btn-border-color: var(--color-borrowed);
+    --bs-btn-hover-color: var(--color-white);
+    --bs-btn-hover-bg: var(--color-borrowed);
+    --bs-btn-hover-border-color: var(--color-borrowed);
+    --bs-btn-focus-shadow-rgb: var(--color-borrowed-rgb);
+    --bs-btn-active-color: var(--color-white);
+    --bs-btn-active-bg: var(--color-borrowed);
+    --bs-btn-active-border-color: var(--color-borrowed);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: var(--color-white);
+    --bs-btn-disabled-bg: rgba(var(--color-borrowed-rgb), 0.6);
+    --bs-btn-disabled-border-color: rgba(var(--color-borrowed-rgb), 0.7);
+}
+
+.btn-lent {
+    --bs-btn-color: var(--color-white);
+    --bs-btn-bg: rgba(var(--color-lent-rgb), 0.95);
+    --bs-btn-border-color: var(--color-lent);
+    --bs-btn-hover-color: var(--color-white);
+    --bs-btn-hover-bg: var(--color-lent);
+    --bs-btn-hover-border-color: var(--color-lent);
+    --bs-btn-focus-shadow-rgb: var(--color-lent-rgb);
+    --bs-btn-active-color: var(--color-white);
+    --bs-btn-active-bg: var(--color-lent);
+    --bs-btn-active-border-color: var(--color-lent);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: var(--color-white);
+    --bs-btn-disabled-bg: rgba(var(--color-lent-rgb), 0.6);
+    --bs-btn-disabled-border-color: rgba(var(--color-lent-rgb), 0.7);
+}

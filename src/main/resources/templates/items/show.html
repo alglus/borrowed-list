@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/item-layout.html}"
+      th:with="itemType = ${item.getType()}">
+<head>
+    <title th:text="#{show.title.__${itemType}__(${item.getTitle()})}">List of items</title>
+</head>
+<body>
+
+<div layout:fragment="item" id="showItem" class="w-50">
+
+
+    <h2 class="mb-4" th:utext="${item.getTitle()}" th:classappend="'titleItem-' + ${itemType}">A screw driver</h2>
+
+    <dl class="row">
+        <dt class="col-sm-4" th:text="#{show.to-from.__${itemType}__}">From:</dt>
+        <dd class="col-sm-8" th:text="${item.getWhom()}">Tom</dd>
+
+        <dt class="col-sm-4" th:text="#{show.date.__${itemType}__.label}">On:</dt>
+        <dd class="col-sm-8" th:text="#{show.date(${item.getDate()}, #{item.date.daysAgo(${item.getDaysAgo()})})}">11/09/2022 (42 days ago)</dd>
+
+        <dt class="col-sm-4" th:text="#{show.due.label}">Due on:</dt>
+        <dd class="col-sm-8" th:text="${item.getDueDate()}">29/02/2024</dd>
+
+        <dt class="col-sm-4" th:text="#{show.description}">Description:</dt>
+        <dd class="col-sm-8" th:text="${(item.getDescription() == null || item.getDescription().isEmpty()) ? '-' : item.getDescription()}">Cross-head....</dd>
+
+        <dt class="col-sm-4" th:text="#{show.category.label}">Category:</dt>
+        <dd class="col-sm-8"><span class="badge text-bg-secondary" th:text="${item.getCategory().getTitle()}">Tools</span></dd>
+    </dl>
+
+    <div id="showItemButtons" class="d-flex pt-4 mt-5">
+        <a role="button" class="btn btn-secondary me-3" th:with="query = ${#request.getQueryString()}" th:href="@{/items/{id}/edit?{q} (id=${item.getId()}, q=${query})}" th:text="#{button.edit}" href="#">Edit</a>
+
+        <a role="button" class="btn btn-secondary" th:href="@{/items/{id}/return (id=${item.getId()})}" th:text="#{button.mark-returned}" href="#">Mark returned</a>
+
+        <form class="d-inline-block ms-auto" th:method="DELETE" th:action="@{/items/{id}/delete?type={type} (id=${item.getId()}, type=${itemType})}">
+            <input type="submit" class="btn btn-danger" th:value="#{button.delete}">
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

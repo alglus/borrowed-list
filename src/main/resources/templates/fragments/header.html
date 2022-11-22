@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+
+<header th:fragment="header" class=""
+        th:with="itemTypeParam = ${param.type}, query = ${#request.getQueryString()}">
+
+    <nav class="container d-flex flex-fill" role="navigation">
+        <img class="my-auto" src="/img/logo_header.webp" alt="App logo" width="242" height="30">
+
+        <div class="nav nav-pills nav-justified flex-grow-1 mx-5 my-auto">
+            <a id="navButtonBorrowed" class="nav-link me-4" href="/items?type=borrowed" th:text="#{list.title.borrowed}"
+               th:classappend="${itemTypeParam == null ? '' : (itemTypeParam[0] == 'borrowed' ? 'active disabled' : '')}">Borrowed items
+            </a>
+            <a id="navButtonLent" class="nav-link" href="/items?type=lent" th:text="#{list.title.lent}"
+               th:classappend="${itemTypeParam == null ? '' : (itemTypeParam[0] == 'lent' ? 'active disabled' : '')}">Lent items
+            </a>
+        </div>
+
+        <div class="d-flex">
+            <a role="button" class="btn btn-outline-secondary my-auto ms-auto" th:href="@{/account}" th:title="#{button.account}"
+               th:classappend="${#strings.containsIgnoreCase(#request.getRequestURL(), 'account') ? 'configBtnActive' : ''}">
+                <svg class="bi bi-person" width="18" height="18" role="img" aria-label="Account">
+                    <use xlink:href="#person-fill"/>
+                </svg>
+            </a>
+
+            <a role="button" class="btn btn-outline-secondary my-auto ms-4" th:href="@{/settings}" th:title="#{button.settings}"
+               th:classappend="${#strings.containsIgnoreCase(#request.getRequestURL(), 'settings') ? 'configBtnActive' : ''}">
+                <svg class="bi bi-gear-fill" width="18" height="18" role="img" aria-label="Settings">
+                    <use xlink:href="#gear-fill"/>
+                </svg>
+            </a>
+            <form method="POST" th:action="@{/logout}" class="my-auto ms-4">
+                <button type="submit" class="btn btn-outline-secondary" th:title="#{button.logout}">
+                    <svg class="bi bi-box-arrow-right" width="20" height="20" role="img" aria-label="Logout">
+                        <use xlink:href="#logout"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </nav>
+
+</header>
+
+</body>
+</html>

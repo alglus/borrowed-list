@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/app-layout.html}">
+<head>
+    <title th:text="#{account.title.short}">Account</title>
+</head>
+<body>
+
+<main layout:fragment="main" class="w-50 mx-auto position-relative">
+
+    <div th:replace="fragments/saved-successfully :: saved"></div>
+
+    <h2 class="mb-4" th:text="#{account.title.long}">Account</h2>
+
+    <div class="mb-5">
+        <h4 class="mb-3" th:text="#{account.email.title}">Email</h4>
+
+        <label class="form-label" for="email" th:text="#{account.email.label}">Current email</label>
+        <input id="email" name="email" type="text" class="form-control w-50" th:value="${email}" disabled readonly>
+    </div>
+
+    <div class="mb-5">
+        <h4 class="mb-3" th:text="#{account.password.title}">Change password</h4>
+
+        <form th:method="PATCH" th:with="query = ${#request.getQueryString()}" th:action="@{/account/change-password}" th:object="${changePasswordDTO}" novalidate>
+            <div class="mb-3">
+                <label class="form-label" for="currentPassword" th:text="#{account.password.current.label}">Current password</label>
+                <input type="password" id="currentPassword" class="form-control pwd-change-input" th:classappend="${#fields.hasErrors('currentPassword') ? 'is-invalid' : ''}"
+                       th:field="*{currentPassword}" th:placeholder="#{account.password.current.placeholder}" onkeyup="enableChangePasswordButton()" required>
+                <div class="invalid-feedback" th:errors="*{currentPassword}">ERROR</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="newPassword" th:text="#{account.password.new.label}">New password</label>
+                <input type="password" id="newPassword" class="form-control pwd-change-input" th:classappend="${#fields.hasErrors('newPassword') ? 'is-invalid' : ''}"
+                       th:field="*{newPassword}" th:placeholder="#{account.password.new.placeholder}" onkeyup="enableChangePasswordButton()">
+                <div class="form-text" th:text="#{validate.password.info}">Password instructions.</div>
+                <div class="invalid-feedback" th:errors="*{newPassword}">ERROR</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="retypedPassword" th:text="#{account.password.retyped.label}">Retyped password</label>
+                <input type="password" id="retypedPassword" class="form-control pwd-change-input" th:classappend="${#fields.hasErrors('global') ? 'is-invalid' : ''}"
+                       th:field="*{retypedPassword}" th:placeholder="#{account.password.retyped.placeholder}" onkeyup="enableChangePasswordButton()" required>
+                <div class="invalid-feedback" th:errors="*{global}">ERROR</div>
+            </div>
+            <button id="changePasswordButton" class="btn btn-secondary" type="submit" th:text="#{account.button.change-password}" disabled>Change</button>
+        </form>
+    </div>
+
+
+    <div>
+        <h4 class="mb-3" th:text="#{account.delete.title}">Delete account</h4>
+
+        <p th:text="#{account.delete.explanation-text}">If you want to delete your account...</p>
+
+        <form th:method="POST" th:action="@{/account/delete}">
+            <button class="btn btn-danger" type="submit" th:text="#{account.button.delete}">Delete</button>
+        </form>
+    </div>
+
+</main>
+
+</body>
+</html>

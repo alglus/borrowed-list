@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Saved successfully alert</title>
+</head>
+<body>
+
+<div th:fragment="saved" class="position-absolute top-0 w-100 d-flex">
+    <div th:if="${save == 'success'}" th:text="#{config.saved-successfully}"
+         class="d-inline-flex mx-auto my-auto px-2 py-1 fw-semibold text-success bg-success bg-opacity-10 border border-success border-opacity-10 rounded-2">
+        Saved successfully
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/auth-layout.html}">
+<head>
+    <title th:text="#{register.title}">Create account</title>
+</head>
+<body>
+
+<div layout:fragment="form">
+
+    <h3 class="mb-3 fw-normal" th:text="#{register.heading}">Please create a new account</h3>
+
+
+    <form method="POST" th:action="@{/register}" th:object="${registrationDTO}" novalidate>
+
+        <div class="form-floating">
+            <input type="email" th:field="*{email}" class="form-control" id="floatingInput" placeholder="name@example.com" th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}">
+            <label for="floatingInput" th:text="#{auth.email.label}">Email address</label>
+            <div th:if="${#fields.hasErrors('email')}" class="form-floating-error" th:errors="*{email}">ERROR</div>
+        </div>
+
+        <div class="form-floating">
+            <input type="password" th:field="*{password}" class="form-control" id="registerInputPassword" placeholder="password" th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}">
+            <label for="registerInputPassword" th:text="#{auth.password.label}">Password</label>
+            <div th:if="${#fields.hasErrors('password')}" class="form-floating-error" th:errors="*{password}">ERROR</div>
+        </div>
+
+        <div class="form-floating">
+            <input type="password" th:field="*{retypedPassword}" class="form-control" id="registerInputRetypedPassword" placeholder="password" th:classappend="${#fields.hasErrors('global') ? 'is-invalid' : ''}">
+            <label for="registerInputRetypedPassword" th:text="#{register.retype-password.label}">Retyped Password</label>
+            <div th:if="${#fields.hasErrors('global')}" class="form-floating-error" th:errors="*{global}">ERROR</div>
+        </div>
+
+        <button class="w-100 btn btn-lg btn-primary mt-3 mb-3" type="submit" th:text="#{register.button.create-account}">Register</button>
+    </form>
+
+    <a href="/login" th:text="#{register.link.login}">Log in</a>
+
+</div>
+
+</body>
+</html>

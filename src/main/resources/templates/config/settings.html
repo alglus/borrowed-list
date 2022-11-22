@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/app-layout.html}">
+<head>
+    <title th:text="#{settings.title.short}">Settings</title>
+</head>
+<body>
+
+<main layout:fragment="main" class="w-50 mx-auto position-relative">
+
+    <div th:replace="fragments/saved-successfully :: saved"></div>
+
+    <h2 class="mb-4" th:text="#{settings.title.long}">Settings</h2>
+
+    <form th:method="PATCH" th:action="@{/settings}" th:object="${settingsPageDTO}">
+
+        <div class="mb-5">
+            <h4 class="mb-3" th:text="#{settings.language.title}">Language</h4>
+
+            <label class="form-label" for="select-language" th:text="#{settings.language.label}">Select language</label>
+            <select class="form-select w-50" name="languageCode" id="select-language">
+                <option th:each="languageCode : ${supportedLanguages}"
+                        th:value="${{languageCode}}"
+                        th:text="#{language.__${languageCode}__}"
+                        th:selected="${languageCode == currentLanguageCode}">
+                </option>
+            </select>
+        </div>
+
+        <div class="mb-5">
+            <h4 class="mb-3" th:text="#{settings.homepage.title}">Homepage</h4>
+
+            <p class="form-label" th:text="#{settings.homepage.label}">Select homepage</p>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="homepageItemType" id="homepageBorrowedItems" th:with="val = 'borrowed'" th:value="${val}" th:checked="${currentHomepageItemType == val}">
+                <label class="form-check-label" for="homepageBorrowedItems" th:text="#{settings.homepage.option.borrowed}">Borrowed items</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="homepageItemType" id="homepageLentItems" th:with="val = 'lent'" th:value="${val}" th:checked="${currentHomepageItemType == val}">
+                <label class="form-check-label" for="homepageLentItems" th:text="#{settings.homepage.option.lent}">Lent items</label>
+            </div>
+        </div>
+
+        <button class="btn btn-secondary" type="submit" th:text="#{settings.button.save}">Save</button>
+    </form>
+
+</main>
+
+</body>
+</html>

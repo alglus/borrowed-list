@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/item-layout.html}">
+<head>
+    <title th:text="#{edit.title(${item.getTitle()})}">Edit item</title>
+</head>
+<body>
+
+<main layout:fragment="item" class="w-50">
+
+    <form th:method="PATCH" th:action="@{/items/{id}/edit?{q} (id=${item.getId()}, q=${#request.getQueryString()})}" th:object="${item}">
+
+        <div th:replace="fragments/item-form :: item-form"></div>
+
+        <input type="submit" class="btn" th:classappend="'btn-' + ${itemType}" th:value="#{edit.button.update}">
+
+    </form>
+
+</main>
+
+</body>
+</html>

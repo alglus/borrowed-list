@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/app-layout.html}">
+<body>
+
+<main layout:fragment="main" class="d-flex w-100">
+    <div class="ps-2 w-25">
+        <a class="text-decoration-none back-arrow" th:with="query = ${#request.getQueryString()}" th:href="@{'/items?' + ${query}}"
+           th:utext="${'<svg class=&quot;bi bi-arrow-left-short&quot; width=&quot;18&quot; height=&quot;18&quot; role=&quot;img&quot; aria-label=&quot;Back&quot;><use xlink:href=&quot;#arrow-left-short&quot;/></svg>'} + #{button.back}">
+            Back
+        </a>
+    </div>
+    <div layout:fragment="item"></div>
+</main>
+
+</body>
+</html>

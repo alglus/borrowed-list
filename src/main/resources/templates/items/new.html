@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/item-layout.html}"
+      th:with="itemType=${param.type[0]}">
+<head>
+    <title th:text="#{new.title.__${itemType}__}">Add item</title>
+</head>
+<body>
+
+<div layout:fragment="item" class="w-50">
+
+    <form method="POST" th:action="@{/items/new?type={type} (type=${itemType})}" th:object="${item}" novalidate>
+
+        <div th:replace="fragments/item-form :: item-form"></div>
+
+        <input type="submit" class="btn" th:classappend="'btn-' + ${itemType}" th:value="#{new.button.add}">
+
+    </form>
+
+</div>
+
+</body>
+</html>

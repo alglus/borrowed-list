@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html th:lang="${#locale}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/ico" href="/img/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="/css/auth.css" rel="stylesheet">
+    <title layout:title-pattern="$CONTENT_TITLE | $LAYOUT_TITLE" th:text="#{app.title}">Layout title</title>
+</head>
+<body class="h-100 text-center position-relative">
+
+<!--/*  Logged out successcully  */-->
+<div id="logoutSuccessful">
+    <p th:if="${param.logged_out}" th:text="#{login.logged-out-successfully}">LOGGED OUT SUCCESSFULLY</p>
+</div>
+
+<main class="form-auth w-100 m-auto">
+
+    <!--/*  Logo  */-->
+    <img class="mb-5" src="/img/logo.webp" alt="App logo" width="271" height="50">
+
+
+    <!--/*  Form: Login or Register  */-->
+    <div layout:fragment="form">Login / register form</div>
+
+
+    <!--/*  Languages  */-->
+    <div class="mt-5 text-muted">
+        <div class="d-inline" th:each="languageCode : ${supportedLanguages}">
+            <p th:if="${#strings.equalsIgnoreCase(#locale, languageCode)}" class="mx-1 d-inline" th:text="#{language.__${languageCode}__}">Current language</p>
+            <a th:unless="${#strings.equalsIgnoreCase(#locale, languageCode)}" class="mx-1" th:href="${#request.getRequestURL() + '?lang=' + languageCode}" th:text="#{language.__${languageCode}__}" href="#"></a>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+</body>
+</html>
