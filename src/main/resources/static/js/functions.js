@@ -46,6 +46,13 @@ function offsetFromParentRightEdge(elementId, parentId, offsetRightInPixels) {
     const parentRightEdge = parent.getBoundingClientRect().right;
     const elementWidth = element.getBoundingClientRect().width;
 
-    element.style.left = `${parentRightEdge - offsetRightInPixels - elementWidth}px`;
+    element.style.left = `${Math.max(0, Math.min(parentRightEdge, screenWidth()) - offsetRightInPixels - elementWidth)}px`;
 }
 
+function screenWidth() {
+    // https://stackoverflow.com/a/4987330
+    return window.innerWidth
+        || document.documentElement.clientWidth
+        || document.body.clientWidth
+        || 0;
+}
