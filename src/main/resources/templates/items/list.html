@@ -75,7 +75,7 @@
                             <p class="card-text" th:text="#{item.date.daysAgo(${item.getDaysAgo()})}" th:title="${item.getDate()}">42 days ago</p>
                         </div>
                         <div class="col-4">
-                            <p class="card-text" th:text="#{item.due(${item.getDueDate()})}" th:title="${item.getDueDate()}"></p>
+                            <p class="card-text" th:if="${item.getDueDate() != null}" th:text="#{item.due(${item.getDueDate()})}" th:title="${item.getDueDate()}"></p>
                         </div>
                     </div>
                 </div>

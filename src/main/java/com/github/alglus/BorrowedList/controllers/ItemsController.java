@@ -157,6 +157,8 @@ public class ItemsController {
                            BindingResult bindingResult,
                            HttpServletRequest request) {
 
+        itemValidator.validate(updatedItem, bindingResult);
+
         if (bindingResult.hasErrors()) {
             Item item = itemService.findByIdOrThrowResponseStatusNotFoundException(id);
 

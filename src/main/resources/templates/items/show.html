@@ -20,7 +20,7 @@
         <dd class="col-sm-8" th:text="#{show.date(${item.getDate()}, #{item.date.daysAgo(${item.getDaysAgo()})})}">11/09/2022 (42 days ago)</dd>
 
         <dt class="col-sm-4" th:text="#{show.due.label}">Due on:</dt>
-        <dd class="col-sm-8" th:text="${item.getDueDate()}">29/02/2024</dd>
+        <dd class="col-sm-8" th:text="${item.getDueDate() == null ? '-' : item.getDueDate()}">29/02/2024</dd>
 
         <dt class="col-sm-4" th:text="#{show.description}">Description:</dt>
         <dd class="col-sm-8" th:text="${(item.getDescription() == null || item.getDescription().isEmpty()) ? '-' : item.getDescription()}">Cross-head....</dd>
