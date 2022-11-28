@@ -104,6 +104,7 @@ header nav {
  */
 #listOptions {
     width: 290px;
+    margin-right: 2rem;
 }
 
 #listOptions .form-select {

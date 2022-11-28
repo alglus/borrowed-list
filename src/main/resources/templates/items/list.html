@@ -10,12 +10,17 @@
 
 <main layout:fragment="main" id="itemsListContainer" class="d-flex flex-grow-1">
 
-    <div id="listOptions" class="small me-5" style="color: #444;">
+    <!--/* Options side bar */-->
+    <div id="listOptions" class="small" style="color: #444;">
 
+        <!--/* Items count */-->
         <h5 th:text="#{list.items-count.label.__${itemType}__}">Borrowed items</h5>
         <p class="card-text" th:text="#{list.items-count(${totalItems})}">42 items</p>
 
+        <!--/* Display options */-->
         <h5 th:text="#{list.display.label}">Display</h5>
+
+        <!--/* Items per page */-->
         <div class="row mb-3">
             <div class="col-auto">
                 <label for="itemsPerPage" class="col-form-label" th:text="#{list.items-per-page.label}">Items per page</label>
@@ -30,6 +35,7 @@
             </div>
         </div>
 
+        <!--/* Sort by */-->
         <div class="row">
             <div class="col-auto">
                 <label for="selectSort" class="col-form-label" th:text="#{list.sort.label}">Sort by</label>
@@ -47,7 +53,17 @@
         </div>
     </div>
 
+    <!--/* Items */-->
     <div class="flex-fill d-flex flex-column">
+
+        <!--/* Empty list */-->
+        <div th:if="${items.isEmpty()}" class="text-center">
+            <p class="fs-4" th:text="#{list.empty.heading}">Your list is empty.</p>
+            <p th:text="#{list.empty.question.__${itemType}__}">Maybe there is something, you have borrowed from someone?</p>
+            <a th:href="@{'/items/new?' + ${query}}" href="#" th:text="#{list.empty.link.__${itemType}__}">Add a new borrowed item.</a>
+        </div>
+
+        <!--/* List of items */-->
         <div class="itemCard card text-bg-light mb-3" th:each="item : ${items}" th:classappend="'itemCard-' + ${itemType}"
              th:onclick="|window.location.href='@{/items/{id}?{q} (id=${item.getId()}, q=${query})}'|" href="#">
             <div class="row">
@@ -91,6 +107,7 @@
         </div>
 
 
+        <!-- Page navigation */-->
         <div id="pageNav" class="position-relative flex-grow-1">
             <nav class="mt-auto position-absolute bottom-0" aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
@@ -113,6 +130,7 @@
         </div>
     </div>
 
+    <!--/* Add new item buttom */-->
     <a id="addButton" class="btn" th:href="@{'/items/new?' + ${query}}" href="#" th:title="#{list.button.add.__${itemType}__}">
         <svg class="bi bi-plus-lg" width="30" height="30" role="img" aria-label="Add">
             <use xlink:href="#plus"/>
